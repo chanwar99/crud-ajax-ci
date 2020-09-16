@@ -1,17 +1,87 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-?>
-<!DOCTYPE html>
-<html lang="en">
+<div class="container">
+    <div class="row mt-4">
+        <div class="col d-flex justify-content-between">
+            <button type="button" class="btn btn-dark btnCreate">Create</button>
+            <button type="button" class="btn btn-dark btnRead">Read</button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table table-striped table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Npm</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Jurusan</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableLoadMahasiswa">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahasiswa</title>
-</head>
+<!-- Modals -->
+<div class="modal fade" id="modalForm">
+    <div class="modal-dialog">
+        <form class="modal-content" id="formMahasiswa">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="npm">Npm</label>
+                    <input type="text" class="form-control" name="npm" placeholder="">
+                    <div id="npmError" class="mt-1"></div>
+                </div>
+                <div class="form-group">
+                    <label for="nama">Nama</label>
+                    <input type="text" class="form-control" name="nama" placeholder="">
+                    <div id="namaError" class="mt-1"></div>
+                </div>
+                <div class="form-group">
+                    <label for="jurusan">Jurusan</label>
+                    <select class="form-control" name="id_jurusan">
+                        <option value=""></option>
+                        <?php foreach ($dataJurusan as $row) : ?>
+                            <option value="<?= $row->id; ?>"><?= $row->nama_jurusan; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div id="jurusanError" class="mt-1"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-dark">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-<body>
-    <?= 'hello'; ?>
-</body>
-
-</html>
+<div class="modal fade" id="modalConfirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-dark">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
