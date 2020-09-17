@@ -13,6 +13,8 @@ $(document).ready(function () {
 		$("#jurusanError").html("");
 	}
 
+	var pagination = $("#pagination");
+
 	var inTableMahasiswa = () => {
 		$(".btnUpdate").on("click", function () {
 			modalForm.modal();
@@ -27,16 +29,18 @@ $(document).ready(function () {
 		});
 	}
 
-	var readMahasiswa = () => {
+	var readMahasiswa = (no) => {
 		tableBody.html(tableLoading);
 		$.ajax({
-			url: baseUrl + "mahasiswa/read",
-			type: "POST",
+			url: baseUrl + "mahasiswa/read/" + no,
+			type: "GET",
 			data: {},
 			dataType: 'JSON',
 			success: function (response) {
 				if (response.data) {
 					tableBody.hide().html(response.html).fadeIn("slow");
+					pagination.html(response.pagination);
+					$(".btnRead").data("page-no", no);
 					inTableMahasiswa();
 				} else {
 					tableBody.hide().html(tableNotfound).fadeIn("slow");
@@ -54,7 +58,7 @@ $(document).ready(function () {
 			success: function (response) {
 				if (response.data) {
 					modalForm.modal("hide");
-					readMahasiswa();
+					readMahasiswa(0);
 				}
 
 				if (response.error) {
@@ -74,13 +78,18 @@ $(document).ready(function () {
 	});
 
 	$(".btnRead").on("click", function () {
-		readMahasiswa();
+		readMahasiswa($(this).data("page-no"));
 	});
 
-	readMahasiswa();
+	readMahasiswa(0);
 
 	$(formSubmit).on("submit", function (e) {
 		e.preventDefault();
 		insertMahasiswa($(this));
+	});
+
+	$("#pagination").on("click", "a", function (e) {
+		e.preventDefault();
+		readMahasiswa($(this).data("ci-pagination-page"));
 	});
 });

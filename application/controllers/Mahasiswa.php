@@ -25,17 +25,55 @@ class Mahasiswa extends CI_Controller
     public function index()
     {
         $this->data['dataJurusan'] = $this->mahasiswa_model->getAllJurusan();
+
         $this->load->view('header_view', $this->data);
         $this->load->view('mahasiswa_view');
         $this->load->view('footer_view');
     }
 
-    public function read()
+    public function read($rowNo = 0)
     {
         if ($this->input->is_ajax_request()) {
-            $this->db->start_cache();
-            $this->data['dataMahasiswa'] = $this->mahasiswa_model->getAllMahasiswa(0, 0);
-            $this->db->flush_cache();
+            $rowPerpage = 5;
+            if ($rowNo != 0) {
+                $rowNo = ($rowNo - 1) * $rowPerpage;
+            }
+
+            $dataMahasiswa = $this->mahasiswa_model->getAllMahasiswa($rowPerpage, $rowNo);
+            $dataMahasiswaCount = $this->mahasiswa_model->getMahasiswaCount();
+
+            $config['base_url'] = base_url() . 'mahasiswa/read';
+            $config['use_page_numbers'] = TRUE;
+            $config['total_rows'] = $dataMahasiswaCount;
+            $config['per_page'] = $rowPerpage;
+            $config['num_links'] = 2;
+
+            $config['full_tag_open']    = '<ul class="pagination justify-content-center">';
+            $config['full_tag_close']   = '</ul>';
+
+            $config['first_link']       = false;
+            $config['last_link']       = false;
+
+            $config['next_link']       = '<i class="fas fa-chevron-right"></i>';
+            $config['next_tag_open']   = '<li class="page-item">';
+            $config['next_tag_close'] = '</li>';
+
+            $config['prev_link']       = '<i class="fas fa-chevron-left"></i>';
+            $config['prev_tag_open']   = '<li class="page-item">';
+            $config['prev_tag_close'] = '</li>';
+
+            $config['cur_tag_open']   = '<li class="page-item active"><a class="page-link" href="#">';
+            $config['cur_tag_close'] = '</a></li>';
+
+            $config['num_tag_open']   = '<li class="page-item">';
+            $config['num_tag_close'] = '</li>';
+
+            $config['attributes'] = array('class' => 'page-link');
+
+            $this->pagination->initialize($config);
+            $this->data['pagination'] = $this->pagination->create_links();
+            $this->data['dataMahasiswa'] = $dataMahasiswa;
+            $this->data['rowNo'] = $rowNo;
             $this->load->view('mahasiswa_data_view', $this->data);
         } else {
             show_404();

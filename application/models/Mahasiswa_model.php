@@ -70,4 +70,9 @@ class Mahasiswa_model extends CI_Model
     {
         return $this->db->delete($this->tableMahasiswa, array('id' => $id));
     }
+
+    public function getMahasiswaCount()
+    {
+        return $this->db->get($this->tableMahasiswa)->num_rows();
+    }
 }

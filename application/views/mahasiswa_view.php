@@ -1,14 +1,14 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col d-flex justify-content-between">
-            <button type="button" class="btn btn-dark btnCreate">Create</button>
-            <button type="button" class="btn btn-dark btnRead">Read</button>
+            <button type="button" class="btn btn-primary btnCreate">Create</button>
+            <button type="button" class="btn btn-primary btnRead">Read</button>
         </div>
     </div>
-    <div class="row mt-4">
+    <div class="row mt-4" style="min-height: 400px;">
         <div class="col">
             <div class="table-responsive">
-                <table class="table table-striped table-dark">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -22,6 +22,11 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <nav id='pagination'></nav>
         </div>
     </div>
 </div>
@@ -60,7 +65,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-dark">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>
@@ -80,7 +85,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-dark">Submit</button>
+                <button type="button" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
